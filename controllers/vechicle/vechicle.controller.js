@@ -11,7 +11,7 @@ const vechicleList = async (req, res) => {
     query["where"] = { ...query["where"], type };
   }
   const list = await vechicleListModel.findAll(query);
-  return res.json({ data: list });
+  return res.status(200).json({ data: list });
 };
 
 module.exports = {
