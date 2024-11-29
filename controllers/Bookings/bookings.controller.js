@@ -29,6 +29,17 @@ const createBooking = async (req, res) => {
   });
 };
 
+const getBookingDate = async (req, res) => {
+  const { vechicleId } = req.query;
+  const bookings = await bookingModel.findAll({
+    attributes: ["bookingStartDate", "bookingEndDate"],
+    where: { vechicleId },
+  });
+
+  return res.json({ data: bookings });
+};
+
 module.exports = {
   createBooking,
+  getBookingDate,
 };
