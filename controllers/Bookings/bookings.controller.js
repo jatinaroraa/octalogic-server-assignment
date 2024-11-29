@@ -1,6 +1,17 @@
+const {
+  bookingSchema,
+  vechicleIdSchema,
+} = require("../../validation/Bookings");
 const bookingModel = require("./bookings.model");
 
 const createBooking = async (req, res) => {
+  const { error } = bookingSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({
+      message: "Validation failed",
+      error: error.details[0].message,
+    });
+  }
   const {
     userFirstName,
     userLastName,
@@ -30,6 +41,13 @@ const createBooking = async (req, res) => {
 };
 
 const getBookingDate = async (req, res) => {
+  const { error } = vechicleIdSchema.validate(req.query);
+  if (error) {
+    return res.status(400).json({
+      message: "Validation failed",
+      error: error.details[0].message,
+    });
+  }
   const { vechicleId } = req.query;
   const bookings = await bookingModel.findAll({
     attributes: ["bookingStartDate", "bookingEndDate"],
